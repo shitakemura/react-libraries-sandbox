@@ -1,7 +1,7 @@
 import { useListPets } from '../api/pets/pets'
 import { Pet } from '../model'
 
-function Pets() {
+function PetsListPage() {
   const { data: pets } = useListPets()
 
   return (
@@ -14,4 +14,4 @@ function Pets() {
   )
 }
 
-export default Pets
+export default PetsListPage
