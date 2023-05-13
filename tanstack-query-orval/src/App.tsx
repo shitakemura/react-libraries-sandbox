@@ -1,11 +1,8 @@
 import './App.css'
+import Pets from './pages/Pets'
 
 function App() {
-  return (
-    <>
-      <h1>TanStack Query - Orval</h1>
-    </>
-  )
+  return <Pets />
 }
 
 export default App
