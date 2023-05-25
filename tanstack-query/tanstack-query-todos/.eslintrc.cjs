@@ -43,5 +43,11 @@ module.exports = {
         pathGroupsExcludedImportTypes: ['react'],
       },
     ],
+    'no-restricted-imports': [
+      'error',
+      {
+        patterns: ['@/features/*/*'],
+      },
+    ],
   },
 }

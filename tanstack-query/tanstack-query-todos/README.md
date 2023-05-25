@@ -1,5 +1,10 @@
 ## Tanstack query Todos
 
+#### references
+
+- https://tanstack.com/query/latest/docs/react/overview
+- https://tkdodo.eu/blog/practical-react-query
+
 #### setup
 
 - npm create vite@latest
@@ -9,3 +14,4 @@
 
 - npm i @tanstack/react-query
 - npm i -D @tanstack/eslint-plugin-query
+- npm i -D @types/node
