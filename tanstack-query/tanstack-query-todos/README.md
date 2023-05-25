@@ -15,3 +15,6 @@
 - npm i @tanstack/react-query
 - npm i -D @tanstack/eslint-plugin-query
 - npm i -D @types/node
+
+- npm i -D msw msw-devtools
+- npx msw init public/ --save
