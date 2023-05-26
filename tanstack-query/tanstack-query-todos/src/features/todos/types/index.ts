@@ -7,5 +7,6 @@ export type Todo = {
 }
 
 export type CreateTodoData = Pick<Todo, 'title' | 'state'>
+export type UpdateTodoData = Pick<Todo, 'title' | 'state'>
 
 export type Todos = ReadonlyArray<Todo>
