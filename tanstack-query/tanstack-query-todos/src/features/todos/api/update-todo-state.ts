@@ -17,8 +17,8 @@ export const updateTodoState = ({ todoId, data }: UpdateTodoStateOptions) => {
 export const useUpdateTodoState = () => {
   const { mutate: submit, isLoading } = useMutation({
     mutationFn: updateTodoState,
-    onSuccess: () => {
-      queryClient.refetchQueries(['todos'])
+    onSuccess: async () => {
+      await queryClient.refetchQueries(['todos'])
     },
   })
 

@@ -1,4 +1,8 @@
 import { ChangeEvent, useState } from 'react'
+import { useForm } from 'react-hook-form'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
 
 import { useDeleteTodo } from '../../api/delete-todo'
 import { useUpdateTodoState } from '../../api/update-todo-state'
@@ -7,30 +11,37 @@ import { State, Todo, UpdateTodoData } from '../../types'
 
 type Props = Todo
 
+const todoTitleSchema = z.object({
+  title: z.string().min(1, { message: 'Title is required.' }),
+})
+
+export type UpdateTitleInput = z.infer<typeof todoTitleSchema>
+
 export const TodoItem = ({ id, title, state }: Props) => {
   const [editing, setEditing] = useState(false)
-  const [editingTitle, setEditingTitle] = useState(title)
 
-  const finishEditing = () => {
-    setEditingTitle(title)
-    setEditing(false)
-  }
+  const todoTitleForm = useForm<UpdateTitleInput>({
+    defaultValues: { title },
+    resolver: zodResolver(todoTitleSchema),
+    mode: 'onChange',
+  })
 
-  const updateTodoTitle = useUpdateTodoTitle({ onSuccess: finishEditing })
+  const updateTodoTitle = useUpdateTodoTitle({
+    onSuccess: () => setEditing(false),
+  })
   const updateTodoState = useUpdateTodoState()
   const deleteTodo = useDeleteTodo({ todoId: id })
 
   const handleClickEdit = () => setEditing(true)
   const handleClickDelete = () => deleteTodo.submit()
 
-  const handleDoneEdit = () => {
-    const data: UpdateTodoData = { title: editingTitle, state }
+  const handleDoneEdit = (input: UpdateTitleInput) => {
+    const data: UpdateTodoData = { title: input.title, state }
     updateTodoTitle.submit({ todoId: id, data })
   }
-  const handleCancelEdit = finishEditing
-
-  const handleChangeEditTitle = (event: ChangeEvent<HTMLInputElement>) => {
-    setEditingTitle(event.target.value)
+  const handleCancelEdit = () => {
+    todoTitleForm.reset({ title })
+    setEditing(false)
   }
 
   const handleChangeTodoState = (event: ChangeEvent<HTMLInputElement>) => {
@@ -47,19 +58,22 @@ export const TodoItem = ({ id, title, state }: Props) => {
   return (
     <li>
       {editing ? (
-        <div style={{ display: 'flex', gap: 8 }}>
+        <form
+          style={{ display: 'flex', gap: 8 }}
+          onSubmit={todoTitleForm.handleSubmit(handleDoneEdit)}
+        >
           <input
-            type="text"
-            value={editingTitle}
-            onChange={handleChangeEditTitle}
+            {...todoTitleForm.register('title', {
+              required: 'Title is required.',
+            })}
           />
-          <button onClick={handleDoneEdit} disabled={isLoading}>
+          <button type="submit" disabled={isLoading}>
             Done
           </button>
-          <button onClick={handleCancelEdit} disabled={isLoading}>
+          <button type="button" onClick={handleCancelEdit} disabled={isLoading}>
             Cancel
           </button>
-        </div>
+        </form>
       ) : (
         <div style={{ display: 'flex', gap: 8 }}>
           <input
@@ -68,10 +82,14 @@ export const TodoItem = ({ id, title, state }: Props) => {
             onChange={handleChangeTodoState}
           />
           {title}
-          <button onClick={handleClickEdit} disabled={isLoading}>
+          <button type="button" onClick={handleClickEdit} disabled={isLoading}>
             Edit
           </button>
-          <button onClick={handleClickDelete} disabled={isLoading}>
+          <button
+            type="button"
+            onClick={handleClickDelete}
+            disabled={isLoading}
+          >
             Delete
           </button>
         </div>

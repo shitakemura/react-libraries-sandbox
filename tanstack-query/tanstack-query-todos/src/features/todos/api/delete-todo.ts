@@ -14,8 +14,8 @@ export const deleteTodo = ({ todoId }: DeleteTodoOption) => {
 export const useDeleteTodo = ({ todoId }: DeleteTodoOption) => {
   const { mutate: submit, isLoading } = useMutation({
     mutationFn: () => deleteTodo({ todoId }),
-    onSuccess: () => {
-      queryClient.refetchQueries(['todos'])
+    onSuccess: async () => {
+      await queryClient.refetchQueries(['todos'])
     },
   })
 

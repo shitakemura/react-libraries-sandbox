@@ -20,8 +20,8 @@ type UseCreateTodoOptions = {
 export const useCreateTodo = ({ onSuccess }: UseCreateTodoOptions) => {
   const { mutate: submit, isLoading } = useMutation({
     mutationFn: createTodo,
-    onSuccess: () => {
-      queryClient.refetchQueries(['todos'])
+    onSuccess: async () => {
+      await queryClient.refetchQueries(['todos'])
       onSuccess?.()
     },
   })
