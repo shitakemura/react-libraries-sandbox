@@ -5,7 +5,7 @@ import { Todos } from '..'
 import { apiClient } from '@/lib/api-client'
 
 const getTodos = (): Promise<Todos> => {
-  return apiClient('/todos')
+  return apiClient.get('/todos')
 }
 
 export const useTodos = () => {
