@@ -7,6 +7,8 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'prettier',
     'plugin:@tanstack/eslint-plugin-query/recommended',
+    'plugin:testing-library/react',
+    'plugin:jest-dom/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
