@@ -1,13 +1,13 @@
 import { ReactNode } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
+
+import { queryClient } from '@/lib/react-query'
 
 type AppProviderProps = {
   children: ReactNode
 }
-
-const queryClient = new QueryClient()
 
 export const AppProvider = ({ children }: AppProviderProps) => {
   return (
