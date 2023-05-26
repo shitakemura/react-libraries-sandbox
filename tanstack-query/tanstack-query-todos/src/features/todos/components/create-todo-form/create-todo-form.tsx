@@ -13,7 +13,7 @@ export const CreateTodoForm = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const data: CreateTodoData = { title, state: 'all' }
+    const data: CreateTodoData = { title, state: 'open' }
     submit({ data })
   }
 

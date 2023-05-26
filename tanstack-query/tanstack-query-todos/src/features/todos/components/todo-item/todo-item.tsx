@@ -1,8 +1,9 @@
 import { ChangeEvent, useState } from 'react'
 
 import { useDeleteTodo } from '../../api/delete-todo'
+import { useUpdateTodoState } from '../../api/update-todo-state'
 import { useUpdateTodoTitle } from '../../api/update-todo-title'
-import { Todo, UpdateTodoData } from '../../types'
+import { State, Todo, UpdateTodoData } from '../../types'
 
 type Props = Todo
 
@@ -16,6 +17,7 @@ export const TodoItem = ({ id, title, state }: Props) => {
   }
 
   const updateTodoTitle = useUpdateTodoTitle({ onSuccess: finishEditing })
+  const updateTodoState = useUpdateTodoState()
   const deleteTodo = useDeleteTodo({ todoId: id })
 
   const handleClickEdit = () => setEditing(true)
@@ -31,6 +33,17 @@ export const TodoItem = ({ id, title, state }: Props) => {
     setEditingTitle(event.target.value)
   }
 
+  const handleChangeTodoState = (event: ChangeEvent<HTMLInputElement>) => {
+    const newState: State = event.target.checked ? 'done' : 'open'
+    const data: UpdateTodoData = { title, state: newState }
+    updateTodoState.submit({ todoId: id, data })
+  }
+
+  const isLoading =
+    updateTodoTitle.isLoading ||
+    updateTodoState.isLoading ||
+    deleteTodo.isLoading
+
   return (
     <li>
       {editing ? (
@@ -40,14 +53,27 @@ export const TodoItem = ({ id, title, state }: Props) => {
             value={editingTitle}
             onChange={handleChangeEditTitle}
           />
-          <button onClick={handleDoneEdit}>Done</button>
-          <button onClick={handleCancelEdit}>Cancel</button>
+          <button onClick={handleDoneEdit} disabled={isLoading}>
+            Done
+          </button>
+          <button onClick={handleCancelEdit} disabled={isLoading}>
+            Cancel
+          </button>
         </div>
       ) : (
         <div style={{ display: 'flex', gap: 8 }}>
+          <input
+            type="checkbox"
+            checked={state === 'done'}
+            onChange={handleChangeTodoState}
+          />
           {title}
-          <button onClick={handleClickEdit}>Edit</button>
-          <button onClick={handleClickDelete}>Delete</button>
+          <button onClick={handleClickEdit} disabled={isLoading}>
+            Edit
+          </button>
+          <button onClick={handleClickDelete} disabled={isLoading}>
+            Delete
+          </button>
         </div>
       )}
     </li>

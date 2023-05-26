@@ -1,4 +1,4 @@
-type State = 'all' | 'open' | 'done'
+export type State = 'open' | 'done'
 
 export type Todo = {
   id: string
