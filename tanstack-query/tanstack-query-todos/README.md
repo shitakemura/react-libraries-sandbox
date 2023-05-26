@@ -18,3 +18,4 @@
 
 - npm i -D msw msw-devtools
 - npx msw init public/ --save
+- npm i -D @mswjs/data

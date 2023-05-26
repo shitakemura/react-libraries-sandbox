@@ -1,7 +1,7 @@
 type State = 'all' | 'open' | 'done'
 
 export type Todo = {
-  id: number
+  id: string
   title: string
   state: State
 }
