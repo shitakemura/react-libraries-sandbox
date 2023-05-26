@@ -1,5 +1,10 @@
 import { TodosList } from '@/features/todos'
 
 export const TodosPage = () => {
-  return <TodosList />
+  return (
+    <>
+      <h1>Todos List</h1>
+      <TodosList />
+    </>
+  )
 }

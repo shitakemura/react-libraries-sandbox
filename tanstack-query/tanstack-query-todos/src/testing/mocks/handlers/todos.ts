@@ -1,9 +1,11 @@
 import { rest } from 'msw'
 
-import { testData } from '@/testing/test-data'
+import { db } from '../db'
 
 export const todosHandlers = [
-  rest.get('/todos', (_, res, ctx) => {
-    return res(ctx.status(200), ctx.json(testData.todos))
+  // GET: /todos
+  rest.get('http://localhost:3030/todos', (_, res, ctx) => {
+    const todos = db.todo.findMany({})
+    return res(ctx.delay(1000), ctx.status(200), ctx.json(todos))
   }),
 ]

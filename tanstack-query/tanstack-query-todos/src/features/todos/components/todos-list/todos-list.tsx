@@ -1,19 +1,16 @@
-import { Todos } from '../../types'
+import { useTodos } from '../../api/get-todos'
 import { TodoItem } from '../todo-item'
 
-import { testData } from '@/testing/test-data'
-
 export const TodosList = () => {
-  const todos: Todos = testData.todos
+  const { data: todos, isLoading } = useTodos()
+
+  if (isLoading) return <div>Loading...</div>
 
   return (
-    <>
-      <h1>Todos List</h1>
-      <ul>
-        {todos.map((todo) => (
-          <TodoItem key={todo.id} {...todo} />
-        ))}
-      </ul>
-    </>
+    <ul>
+      {todos.map((todo) => (
+        <TodoItem key={todo.id} {...todo} />
+      ))}
+    </ul>
   )
 }

@@ -12,10 +12,15 @@
 - npm install -D eslint-plugin-react eslint-plugin-import
 - npm install react-error-boundary
 
-- npm i @tanstack/react-query
-- npm i -D @tanstack/eslint-plugin-query
-- npm i -D @types/node
+- npm install @tanstack/react-query
+- npm install -D @tanstack/eslint-plugin-query
+- npm install -D @types/node
 
-- npm i -D msw msw-devtools
+- npm install -D msw msw-devtools
 - npx msw init public/ --save
-- npm i -D @mswjs/data
+- npm install -D @mswjs/data
+- npm install axios
+
+#### API
+
+- GET /todos
