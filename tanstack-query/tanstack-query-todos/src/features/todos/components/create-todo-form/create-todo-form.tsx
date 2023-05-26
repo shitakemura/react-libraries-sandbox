@@ -1,29 +1,34 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 import { CreateTodoData } from '../..'
 import { useCreateTodo } from '../../api/create-todo'
 
+type FormData = {
+  title: string
+}
+
 export const CreateTodoForm = () => {
-  const [title, setTitle] = useState('')
-  const { submit, isLoading } = useCreateTodo({ onSuccess: () => setTitle('') })
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>()
+  const { submit, isLoading } = useCreateTodo({ onSuccess: () => reset() })
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value)
-  }
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data: CreateTodoData = { title, state: 'open' }
+  const onSubmit = (formData: FormData) => {
+    const data: CreateTodoData = { title: formData.title, state: 'open' }
     submit({ data })
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <label>
         todo
-        <input name="title" type="text" value={title} onChange={handleChange} />
+        <input {...register('title', { required: 'Title is required' })} />
       </label>
       <button disabled={isLoading}>Create</button>
+      {errors.title && <p role="alert">{errors.title?.message}</p>}
     </form>
   )
 }

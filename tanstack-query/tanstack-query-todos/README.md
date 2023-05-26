@@ -21,6 +21,8 @@
 - npm install -D @mswjs/data
 - npm install axios
 
+- npm install react-hook-form
+
 #### API
 
 - GET /todos
