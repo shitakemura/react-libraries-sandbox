@@ -6,4 +6,6 @@ export type Todo = {
   state: State
 }
 
+export type CreateTodoData = Pick<Todo, 'title' | 'state'>
+
 export type Todos = ReadonlyArray<Todo>
