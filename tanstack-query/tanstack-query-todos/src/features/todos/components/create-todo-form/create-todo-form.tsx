@@ -1,11 +1,16 @@
 import { useForm } from 'react-hook-form'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
+
 import { CreateTodoData } from '../..'
 import { useCreateTodo } from '../../api/create-todo'
 
-type FormData = {
-  title: string
-}
+const schema = z.object({
+  title: z.string().min(1, { message: 'Title is required.' }),
+})
+
+export type FormInput = z.infer<typeof schema>
 
 export const CreateTodoForm = () => {
   const {
@@ -13,11 +18,15 @@ export const CreateTodoForm = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>()
+  } = useForm<FormInput>({
+    resolver: zodResolver(schema),
+    mode: 'onChange',
+  })
+
   const { submit, isLoading } = useCreateTodo({ onSuccess: () => reset() })
 
-  const onSubmit = (formData: FormData) => {
-    const data: CreateTodoData = { title: formData.title, state: 'open' }
+  const onSubmit = (input: FormInput) => {
+    const data: CreateTodoData = { title: input.title, state: 'open' }
     submit({ data })
   }
 

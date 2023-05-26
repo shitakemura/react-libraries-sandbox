@@ -22,6 +22,7 @@
 - npm install axios
 
 - npm install react-hook-form
+- npm install zod @hookform/resolvers
 
 #### API
 
