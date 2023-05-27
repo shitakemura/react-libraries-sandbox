@@ -2,7 +2,12 @@ import userEvent from '@testing-library/user-event'
 
 import { TodosPage } from '../pages/todos'
 
-import { render, screen } from '@/testing/testing-library-utils'
+import {
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@/testing/testing-library-utils'
 
 describe('TodosPage', () => {
   test('initial render correctly', async () => {
@@ -42,5 +47,26 @@ describe('TodosPage', () => {
 
     const newItems = screen.getAllByRole('checkbox')
     expect(newItems).toHaveLength(6)
+  })
+
+  test('should delete a todo', async () => {
+    const user = userEvent.setup()
+    render(<TodosPage />)
+
+    const items = await screen.findAllByRole('listitem')
+    expect(items).toHaveLength(5)
+
+    const secondItem = screen.getByText('todo 2')
+    expect(secondItem).toBeInTheDocument()
+
+    const buttons = items.map((item) => within(item).getByText('Delete'))
+    await user.click(buttons[1])
+
+    await waitFor(() =>
+      expect(screen.queryByText('todo 2')).not.toBeInTheDocument()
+    )
+
+    const newItems = screen.getAllByRole('listitem')
+    expect(newItems).toHaveLength(4)
   })
 })

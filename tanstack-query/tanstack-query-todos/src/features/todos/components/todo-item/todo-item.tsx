@@ -56,7 +56,7 @@ export const TodoItem = ({ id, title, state }: Props) => {
     deleteTodo.isLoading
 
   return (
-    <li>
+    <>
       {editing ? (
         <form
           style={{ display: 'flex', gap: 8 }}
@@ -75,7 +75,7 @@ export const TodoItem = ({ id, title, state }: Props) => {
           </button>
         </form>
       ) : (
-        <div style={{ display: 'flex', gap: 8 }}>
+        <li style={{ display: 'flex', gap: 8 }}>
           <label>
             <input
               type="checkbox"
@@ -94,8 +94,8 @@ export const TodoItem = ({ id, title, state }: Props) => {
           >
             Delete
           </button>
-        </div>
+        </li>
       )}
-    </li>
+    </>
   )
 }
