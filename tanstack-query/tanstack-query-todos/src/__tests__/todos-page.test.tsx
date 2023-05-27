@@ -69,4 +69,28 @@ describe('TodosPage', () => {
     const newItems = screen.getAllByRole('listitem')
     expect(newItems).toHaveLength(4)
   })
+
+  test('should update a todo', async () => {
+    const user = userEvent.setup()
+    render(<TodosPage />)
+
+    const items = await screen.findAllByRole('listitem')
+    const secondItem = screen.getByText('todo 2')
+    expect(secondItem).toBeInTheDocument()
+
+    const buttons = items.map((item) => within(item).getByText('Edit'))
+    await user.click(buttons[1])
+
+    const input = await screen.findByRole('textbox', { name: '' })
+    expect(input).toBeInTheDocument()
+
+    await user.clear(input)
+    await user.type(input, 'todo 2 - update')
+
+    const doneButton = screen.getByRole('button', { name: 'Done' })
+    await user.click(doneButton)
+
+    const updatedItem = await screen.findByText('todo 2 - update')
+    expect(updatedItem).toBeInTheDocument()
+  })
 })
