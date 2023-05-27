@@ -76,12 +76,14 @@ export const TodoItem = ({ id, title, state }: Props) => {
         </form>
       ) : (
         <div style={{ display: 'flex', gap: 8 }}>
-          <input
-            type="checkbox"
-            checked={state === 'done'}
-            onChange={handleChangeTodoState}
-          />
-          {title}
+          <label>
+            <input
+              type="checkbox"
+              checked={state === 'done'}
+              onChange={handleChangeTodoState}
+            />
+            {title}
+          </label>
           <button type="button" onClick={handleClickEdit} disabled={isLoading}>
             Edit
           </button>
