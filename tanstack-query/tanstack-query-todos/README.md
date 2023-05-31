@@ -28,6 +28,17 @@
 - npm install -D @testing-library/jest-dom @testing-library/react @testing-library/user-event
 - npm install -D eslint-plugin-testing-library eslint-plugin-jest-dom
 
+- npm install -D @testing-library/react-hooks react-test-renderer --legacy-peer-deps
+
 #### API
 
-- GET /todos
+- https://github.com/mswjs/data#tohandlers
+  - GET /todos
+  - GET /todos/:id
+  - POST /todos
+  - PUT /todos/:id
+  - DELETE /todos/:id
+
+#### test
+
+- https://tanstack.com/query/v4/docs/react/guides/testing
