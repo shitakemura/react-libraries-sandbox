@@ -28,7 +28,13 @@
 - npm install -D @testing-library/jest-dom @testing-library/react @testing-library/user-event
 - npm install -D eslint-plugin-testing-library eslint-plugin-jest-dom
 
-- npm install -D @testing-library/react-hooks react-test-renderer --legacy-peer-deps
+```
+(The react-test-renderer library is needed as a peer dependency of @testing-library/react-hooks, and needs to correspond to the version of React that you are using.)
+
+Note: when using React 18 or later, renderHook is available directly through the @testing-library/react package, and @testing-library/react-hooks is no longer required.
+```
+
+~~npm install -D @testing-library/react-hooks --legacy-peer-deps~~
 
 #### API
 
