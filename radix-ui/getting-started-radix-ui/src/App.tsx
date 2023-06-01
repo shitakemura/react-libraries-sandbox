@@ -1,4 +1,4 @@
-import { PopoverDemo } from './PopoverDemo/popover-demo'
+import { PopoverDemo } from './components/popover-demo'
 import './app.css'
 
 function App() {
