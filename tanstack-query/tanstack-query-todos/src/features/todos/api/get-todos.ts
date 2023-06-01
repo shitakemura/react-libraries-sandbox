@@ -4,12 +4,13 @@ import { Todos } from '..'
 
 import { apiClient } from '@/lib/api-client'
 
-const getTodos = (): Promise<Todos> => {
-  return apiClient.get('/todos')
+const getTodos = async (): Promise<Todos> => {
+  const response = await apiClient.get('/todos')
+  return response.data as Todos
 }
 
 export const useTodos = () => {
-  const { data, isFetching } = useQuery({
+  const { data, isFetching } = useQuery<Todos>({
     queryKey: ['todos'],
     queryFn: () => getTodos(),
     initialData: [],

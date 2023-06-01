@@ -10,11 +10,12 @@ type UpdateTodoTitleOptions = {
   data: UpdateTodoData
 }
 
-export const updateTodoTitle = ({
+export const updateTodoTitle = async ({
   todoId,
   data,
 }: UpdateTodoTitleOptions): Promise<Todo> => {
-  return apiClient.put(`/todos/${todoId}`, data)
+  const response = await apiClient.put(`/todos/${todoId}`, data)
+  return response.data as Todo
 }
 
 type UseUpdateTodoTitleOptions = {

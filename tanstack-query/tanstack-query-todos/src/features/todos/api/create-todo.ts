@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 
-import { CreateTodoData } from '..'
+import { CreateTodoData, Todo } from '..'
 
 import { apiClient } from '@/lib/api-client'
 import { queryClient } from '@/lib/react-query'
@@ -9,8 +9,11 @@ type CreateTodoOptions = {
   data: CreateTodoData
 }
 
-export const createTodo = ({ data }: CreateTodoOptions) => {
-  return apiClient.post('/todos', data)
+export const createTodo = async ({
+  data,
+}: CreateTodoOptions): Promise<Todo> => {
+  const response = await apiClient.post('/todos', data)
+  return response.data as Todo
 }
 
 type UseCreateTodoOptions = {
