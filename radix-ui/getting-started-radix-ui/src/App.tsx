@@ -1,5 +1,8 @@
+import { PopoverDemo } from './PopoverDemo/popover-demo'
+import './app.css'
+
 function App() {
-  return <h1>Getting started - Radix UI</h1>
+  return <PopoverDemo />
 }
 
 export default App
