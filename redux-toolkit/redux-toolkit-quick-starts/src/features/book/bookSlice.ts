@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../app/store'
 import { v4 as uuidv4 } from 'uuid'
 
-type Book = {
+export type Book = {
   id: string
   title: string
   author?: string
