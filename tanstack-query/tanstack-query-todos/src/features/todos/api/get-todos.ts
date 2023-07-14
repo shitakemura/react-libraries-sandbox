@@ -1,19 +1,27 @@
-import { useQuery } from '@tanstack/react-query'
+import { UseQueryOptions, useQuery } from '@tanstack/react-query'
+import { AxiosError } from 'axios'
 
 import { Todos } from '..'
 
 import { apiClient } from '@/lib/api-client'
 
 const getTodos = async (): Promise<Todos> => {
-  const response = await apiClient.get('/todos')
-  return response.data as Todos
+  const response = await apiClient.get<Todos>('/todos')
+  return response.data
 }
 
-export const useTodos = () => {
-  const { data, isFetching } = useQuery<Todos>({
-    queryKey: ['todos'],
-    queryFn: () => getTodos(),
-    initialData: [],
+export const TodosQueryKey = ['todos'] as const
+
+export const useTodos = <TData = Todos>(
+  options?: Omit<
+    UseQueryOptions<Todos, AxiosError, TData, typeof TodosQueryKey>,
+    'queryKey' | 'queryFn'
+  >
+) => {
+  const { data, isFetching } = useQuery({
+    queryKey: TodosQueryKey,
+    queryFn: getTodos,
+    ...options,
   })
 
   return {
