@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 
-import { CreateTodoData, Todo } from '..'
+import { CreateTodoData, Todo, Todos } from '..'
 
 import { apiClient } from '@/lib/api-client'
 import { queryClient } from '@/lib/react-query'
@@ -22,10 +22,32 @@ type UseCreateTodoOptions = {
 
 export const useCreateTodo = ({ onSuccess }: UseCreateTodoOptions) => {
   const { mutate: submit, isLoading } = useMutation({
-    mutationFn: createTodo,
-    onSuccess: async () => {
-      await queryClient.refetchQueries(['todos'])
-      onSuccess?.()
+    mutationFn: (todo: CreateTodoData) => createTodo({ data: todo }),
+    // onSuccess: async () => {
+    //   await queryClient.refetchQueries(['todos'])
+    //   onSuccess?.()
+    // },
+    onMutate: async (todo: CreateTodoData) => {
+      await queryClient.cancelQueries({
+        queryKey: ['todos'],
+      })
+      const previousTodos = queryClient.getQueriesData({
+        queryKey: ['todos'],
+      })
+      queryClient.setQueriesData(['todos'], (prevData: Todos | undefined) => {
+        return prevData
+          ? [{ id: '', ...todo }, ...prevData]
+          : [{ id: '', ...todo }]
+      })
+      return { previousTodos }
+    },
+    onError: (error, todos, context) => {
+      queryClient.setQueriesData(['todos'], context?.previousTodos)
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['todos'],
+      })
     },
   })
 

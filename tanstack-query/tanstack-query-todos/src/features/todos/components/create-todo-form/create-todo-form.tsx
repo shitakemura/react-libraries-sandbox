@@ -27,7 +27,7 @@ export const CreateTodoForm = () => {
 
   const onSubmit = (input: FormInput) => {
     const data: CreateTodoData = { title: input.title, state: 'open' }
-    submit({ data })
+    submit(data)
   }
 
   return (
