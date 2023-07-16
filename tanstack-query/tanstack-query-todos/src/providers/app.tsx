@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import { queryClient } from '@/lib/react-query'
 
@@ -18,6 +19,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       >
         {children}
       </ErrorBoundary>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )
 }
